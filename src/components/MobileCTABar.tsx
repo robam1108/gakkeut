@@ -61,7 +61,7 @@ export default function MobileCTABar() {
         카톡
       </a>
       <a
-        href="#contact"
+        href="#contact-form"
         className="tap"
         style={{
           flex: 1.4,

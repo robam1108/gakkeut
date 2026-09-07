@@ -1,6 +1,4 @@
-@import "tailwindcss";
-
-@theme {
+:root {
   --color-navy-50: #eff6ff;
   --color-navy-100: #dbeafe;
   --color-navy-300: #93c5fd;
@@ -32,87 +30,71 @@
   --font-family-sans: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
 }
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  body {
-    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-    color: var(--color-gray-800);
-    background-color: white;
-    margin: 0;
-  }
-  #root {
-    width: 100%;
-    min-height: 100vh;
-  }
+html {
+  scroll-behavior: smooth;
+}
+section[id] {
+  scroll-margin-top: 4rem;
+}
+body {
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  color: var(--color-gray-800);
+  background-color: white;
+  margin: 0;
+}
+#root {
+  width: 100%;
+  min-height: 100vh;
 }
 
-@layer components {
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.85rem 1.7rem;
-    background-color: var(--color-sky-600);
-    border: 2px solid var(--color-sky-600);
-    color: white;
-    font-weight: 600;
-    font-size: 0.95rem;
-    letter-spacing: 0.05em;
-    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
-  }
-  .btn-primary:hover {
-    background-color: var(--color-sky-700);
-    border-color: var(--color-sky-700);
-  }
+.btn-primary,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.7rem;
+  background-color: transparent;
+  border: 2px solid transparent;
+  color: #0369a1;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+.btn-primary:hover,
+.btn-outline:hover {
+  background-color: #0284c7;
+  border-color: #0284c7;
+  color: white;
+}
 
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.85rem 1.7rem;
-    background-color: transparent;
-    border: 2px solid var(--color-sky-600);
-    color: var(--color-sky-600);
-    font-weight: 600;
-    font-size: 0.95rem;
-    letter-spacing: 0.05em;
-    transition: background-color 0.2s, color 0.2s;
-  }
-  .btn-outline:hover {
-    background-color: var(--color-sky-600);
-    color: white;
-  }
+.hero-section {
+  min-height: 100vh;
+  min-height: 100svh;
+}
 
-  .hero-section {
-    min-height: 100vh;
-    min-height: 100svh;
-  }
+.section-title {
+  font-size: clamp(1.875rem, 4vw, 2.25rem);
+  font-weight: 700;
+  color: var(--color-navy-900);
+  line-height: 1.25;
+}
 
-  .section-title {
-    font-size: clamp(1.875rem, 4vw, 2.25rem);
-    font-weight: 700;
-    color: var(--color-navy-900);
-    line-height: 1.25;
-  }
+.section-sub {
+  font-size: 1.125rem;
+  color: var(--color-gray-500);
+  margin-top: 0.75rem;
+  line-height: 1.6;
+}
 
-  .section-sub {
-    font-size: 1.125rem;
-    color: var(--color-gray-500);
-    margin-top: 0.75rem;
-    line-height: 1.6;
-  }
-
-  .badge {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-navy-500);
-    margin-bottom: 0.75rem;
-  }
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-navy-500);
+  margin-bottom: 0.75rem;
 }
 
 @media (max-width: 767px) {
@@ -143,8 +125,20 @@
   .btn-primary,
   .btn-outline {
     padding: 0.8rem 0.75rem;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     letter-spacing: 0.01em;
+  }
+
+  .hero-cta .btn-primary {
+    display: none !important;
+  }
+  .hero-cta .btn-outline {
+    flex: 0 0 auto;
+    background-color: #0284c7;
+    border-color: #0284c7;
+    color: white;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .section-sub {

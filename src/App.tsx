@@ -12,7 +12,7 @@ import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <div className="min-h-screen">
+    <div>
       <Navbar />
       <Hero />
       <Trust />

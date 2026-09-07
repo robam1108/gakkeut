@@ -44,7 +44,7 @@ export default function Hero() {
         <p
           style={{
             color: "#0369a1",
-            fontSize: "clamp(0.75rem, 1.1vw, 0.8125rem)",
+            fontSize: "clamp(0.8125rem, 1.25vw, 0.9375rem)",
             fontWeight: 700,
             letterSpacing: "0.3em",
             textTransform: "uppercase",
@@ -55,7 +55,7 @@ export default function Hero() {
         </p>
         <h1
           style={{
-            fontSize: "clamp(2rem, 6.6vw, 4rem)",
+            fontSize: "clamp(2.25rem, 7.2vw, 4.5rem)",
             fontWeight: 900,
             lineHeight: 1.15,
             marginBottom: "1.1rem",
@@ -68,7 +68,7 @@ export default function Hero() {
         </h1>
         <p
           style={{
-            fontSize: "clamp(1rem, 1.6vw, 1.1875rem)",
+            fontSize: "clamp(1.0625rem, 1.8vw, 1.3125rem)",
             color: "#334155",
             maxWidth: "36rem",
             margin: "0 0 2rem",
@@ -89,7 +89,7 @@ export default function Hero() {
             justifyContent: "flex-start",
           }}
         >
-          <a href="#contact" className="btn-primary">
+          <a href="#contact-form" className="btn-primary">
             무료 견적 받기
           </a>
           <a href="#services" className="btn-outline">
@@ -117,14 +117,14 @@ export default function Hero() {
             <div key={s.label}>
               <div
                 style={{
-                  fontSize: "clamp(1.375rem, 3vw, 1.75rem)",
+                  fontSize: "clamp(1.5rem, 3.3vw, 1.9375rem)",
                   fontWeight: 900,
                   color: "#0c1b3a",
                 }}
               >
                 {s.num}
               </div>
-              <div style={{ fontSize: "0.75rem", color: "#475569", marginTop: "0.2rem" }}>
+              <div style={{ fontSize: "0.8125rem", color: "#475569", marginTop: "0.2rem" }}>
                 {s.label}
               </div>
             </div>

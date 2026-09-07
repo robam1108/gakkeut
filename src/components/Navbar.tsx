@@ -86,7 +86,7 @@ export default function Navbar() {
         </ul>
 
         <a
-          href="#contact"
+          href="#contact-form"
           className="desktop-cta"
           style={{
             display: "inline-flex",
@@ -127,7 +127,7 @@ export default function Navbar() {
           }}
           aria-label="메뉴"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: "1.5rem", height: "1.5rem" }}>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: "1.5rem", height: "1.5rem" }}>
             {open ? (
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             ) : (
@@ -167,7 +167,7 @@ export default function Navbar() {
           ))}
           <div style={{ padding: "1rem" }}>
             <a
-              href="#contact"
+              href="#contact-form"
               onClick={() => setOpen(false)}
               className="tap"
               style={{

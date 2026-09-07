@@ -99,10 +99,12 @@ export default function Contact() {
 
           {/* Right — Form */}
           <div
+            id="contact-form"
             style={{
               backgroundColor: "white",
               border: "1px solid #e2e8f0",
               padding: "clamp(1.25rem, 4vw, 2rem)",
+              scrollMarginTop: "4rem",
             }}
           >
             {submitted ? (
