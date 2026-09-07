@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useIsMobile } from "../../hooks/useIsMobile";
+
 const SERVICES = [
   {
     emoji: "🏠",
@@ -50,6 +53,9 @@ const SERVICES = [
 ];
 
 export default function Services() {
+  const isMobile = useIsMobile();
+  const [open, setOpen] = useState<number | null>(null);
+
   return (
     <section id="services" style={{ padding: "clamp(3.5rem, 10vw, 6rem) 0", backgroundColor: "#f8fafc" }}>
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0 1.25rem" }}>
@@ -70,85 +76,193 @@ export default function Services() {
             gap: "1.5rem",
           }}
         >
-          {SERVICES.map((s) => (
-            <div
-              key={s.title}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                padding: "2rem",
-                border: `1px solid ${s.highlight ? "#1a3470" : "#e2e8f0"}`,
-                backgroundColor: s.highlight ? "#0f2356" : "white",
-                color: s.highlight ? "white" : "#1e293b",
-              }}
-            >
-              <span style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>{s.emoji}</span>
-              <h3
-                style={{
-                  fontSize: "1.25rem",
-                  fontWeight: 700,
-                  marginBottom: "0.5rem",
-                  color: s.highlight ? "white" : "#0c1b3a",
-                }}
-              >
-                {s.title}
-              </h3>
-              <p
-                style={{
-                  fontSize: "0.875rem",
-                  lineHeight: 1.7,
-                  marginBottom: "1.25rem",
-                  color: s.highlight ? "#93c5fd" : "#64748b",
-                  flexGrow: 0,
-                }}
-              >
-                {s.desc}
-              </p>
-              <ul
-                style={{
-                  listStyle: "none",
-                  padding: 0,
-                  margin: "0 0 1.5rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.375rem",
-                  flexGrow: 1,
-                }}
-              >
-                {s.items.map((item) => (
-                  <li
-                    key={item}
+          {SERVICES.map((s, i) => {
+            const isOpen = open === i;
+            const cardStyle = {
+              display: "flex",
+              flexDirection: "column" as const,
+              padding: "2rem",
+              border: `1px solid ${s.highlight ? "#1a3470" : "#e2e8f0"}`,
+              backgroundColor: s.highlight ? "#0f2356" : "white",
+              color: s.highlight ? "white" : "#1e293b",
+            };
+
+            if (!isMobile) {
+              return (
+                <div key={s.title} style={cardStyle}>
+                  <span style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>{s.emoji}</span>
+                  <h3
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.5rem",
-                      fontSize: "0.875rem",
-                      color: s.highlight ? "#dbeafe" : "#475569",
+                      fontSize: "1.25rem",
+                      fontWeight: 700,
+                      marginBottom: "0.5rem",
+                      color: s.highlight ? "white" : "#0c1b3a",
                     }}
                   >
-                    <span style={{ color: s.highlight ? "#3b82f6" : "#2563eb" }}>✓</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <div
-                style={{
-                  paddingTop: "1rem",
-                  borderTop: `1px solid ${s.highlight ? "#1a3470" : "#f1f5f9"}`,
-                }}
-              >
-                <span
+                    {s.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "0.875rem",
+                      lineHeight: 1.7,
+                      marginBottom: "1.25rem",
+                      color: s.highlight ? "#93c5fd" : "#64748b",
+                      flexGrow: 0,
+                    }}
+                  >
+                    {s.desc}
+                  </p>
+                  <ul
+                    style={{
+                      listStyle: "none",
+                      padding: 0,
+                      margin: "0 0 1.5rem",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.375rem",
+                      flexGrow: 1,
+                    }}
+                  >
+                    {s.items.map((item) => (
+                      <li
+                        key={item}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.5rem",
+                          fontSize: "0.875rem",
+                          color: s.highlight ? "#dbeafe" : "#475569",
+                        }}
+                      >
+                        <span style={{ color: s.highlight ? "#3b82f6" : "#2563eb" }}>✓</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <div
+                    style={{
+                      paddingTop: "1rem",
+                      borderTop: `1px solid ${s.highlight ? "#1a3470" : "#f1f5f9"}`,
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: "0.875rem",
+                        fontWeight: 600,
+                        color: s.highlight ? "#93c5fd" : "#1e4080",
+                      }}
+                    >
+                      {s.price}
+                    </span>
+                  </div>
+                </div>
+              );
+            }
+
+            // Mobile: compact accordion
+            return (
+              <div key={s.title} style={{ ...cardStyle, padding: "1.25rem" }}>
+                <button
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="tap"
                   style={{
-                    fontSize: "0.875rem",
-                    fontWeight: 600,
-                    color: s.highlight ? "#93c5fd" : "#1e4080",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                    width: "100%",
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    margin: 0,
+                    cursor: "pointer",
+                    textAlign: "left",
+                    fontFamily: "inherit",
+                    color: "inherit",
                   }}
                 >
-                  {s.price}
-                </span>
+                  <span style={{ fontSize: "1.75rem" }}>{s.emoji}</span>
+                  <span style={{ flexGrow: 1, minWidth: 0 }}>
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: "1.0625rem",
+                        fontWeight: 700,
+                        color: s.highlight ? "white" : "#0c1b3a",
+                      }}
+                    >
+                      {s.title}
+                    </span>
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: "0.8125rem",
+                        fontWeight: 600,
+                        marginTop: "0.125rem",
+                        color: s.highlight ? "#93c5fd" : "#1e4080",
+                      }}
+                    >
+                      {s.price}
+                    </span>
+                  </span>
+                  <svg
+                    fill="none"
+                    stroke={s.highlight ? "#93c5fd" : "#94a3b8"}
+                    viewBox="0 0 24 24"
+                    style={{
+                      width: "1.25rem",
+                      height: "1.25rem",
+                      flexShrink: 0,
+                      transition: "transform 0.2s",
+                      transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                    }}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                </button>
+
+                {isOpen && (
+                  <div style={{ marginTop: "1rem" }}>
+                    <p
+                      style={{
+                        fontSize: "0.875rem",
+                        lineHeight: 1.7,
+                        marginBottom: "1rem",
+                        color: s.highlight ? "#93c5fd" : "#64748b",
+                      }}
+                    >
+                      {s.desc}
+                    </p>
+                    <ul
+                      style={{
+                        listStyle: "none",
+                        padding: 0,
+                        margin: 0,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.375rem",
+                      }}
+                    >
+                      {s.items.map((item) => (
+                        <li
+                          key={item}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.5rem",
+                            fontSize: "0.875rem",
+                            color: s.highlight ? "#dbeafe" : "#475569",
+                          }}
+                        >
+                          <span style={{ color: s.highlight ? "#3b82f6" : "#2563eb" }}>✓</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

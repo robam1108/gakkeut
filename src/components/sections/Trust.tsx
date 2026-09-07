@@ -62,7 +62,7 @@ export default function Trust() {
               style={{
                 border: "1px solid #bae6fd",
                 backgroundColor: "rgba(255, 255, 255, 0.6)",
-                padding: "1.5rem",
+                padding: "clamp(1.125rem, 4vw, 1.5rem)",
                 display: "flex",
                 gap: "1rem",
                 alignItems: "flex-start",

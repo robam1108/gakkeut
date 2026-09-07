@@ -92,13 +92,22 @@ export default function Navbar() {
             display: "inline-flex",
             alignItems: "center",
             gap: "0.5rem",
-            padding: "0.625rem 1.25rem",
+            padding: "0.5625rem 1.1875rem",
             fontSize: "0.875rem",
             fontWeight: 600,
             textDecoration: "none",
             transition: "all 0.2s",
             backgroundColor: "#0284c7",
+            border: "2px solid #0284c7",
             color: "white",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#0369a1";
+            (e.currentTarget as HTMLAnchorElement).style.borderColor = "#0369a1";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#0284c7";
+            (e.currentTarget as HTMLAnchorElement).style.borderColor = "#0284c7";
           }}
         >
           무료 견적
@@ -107,12 +116,13 @@ export default function Navbar() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setOpen(!open)}
-          className="mobile-menu-btn"
+          className="mobile-menu-btn tap"
           style={{
             background: "none",
             border: "none",
             cursor: "pointer",
             padding: "0.5rem",
+            minWidth: "44px",
             color: "#1e293b",
           }}
           aria-label="메뉴"
@@ -142,6 +152,7 @@ export default function Navbar() {
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
+              className="tap"
               style={{
                 display: "block",
                 padding: "1rem 1.5rem",
@@ -158,6 +169,7 @@ export default function Navbar() {
             <a
               href="#contact"
               onClick={() => setOpen(false)}
+              className="tap"
               style={{
                 display: "block",
                 width: "100%",

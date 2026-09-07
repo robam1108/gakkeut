@@ -1,9 +1,9 @@
 export default function Hero() {
   return (
     <section
+      className="hero-section"
       style={{
         position: "relative",
-        minHeight: "100vh",
         boxSizing: "border-box",
         paddingTop: "6rem",
         display: "flex",
@@ -34,7 +34,7 @@ export default function Hero() {
         style={{
           position: "relative",
           zIndex: 10,
-          maxWidth: "40rem",
+          maxWidth: "42rem",
           padding: "0 1.25rem",
           marginLeft: "clamp(0.25rem, 8vw, 6rem)",
           textAlign: "left",
@@ -44,18 +44,18 @@ export default function Hero() {
         <p
           style={{
             color: "#0369a1",
-            fontSize: "0.75rem",
+            fontSize: "clamp(0.75rem, 1.1vw, 0.8125rem)",
             fontWeight: 700,
             letterSpacing: "0.3em",
             textTransform: "uppercase",
-            marginBottom: "1rem",
+            marginBottom: "clamp(0.75rem, 2vw, 1rem)",
           }}
         >
           Professional Cleaning Service
         </p>
         <h1
           style={{
-            fontSize: "clamp(2.1rem, 6.8vw, 3.8rem)",
+            fontSize: "clamp(2rem, 6.6vw, 4rem)",
             fontWeight: 900,
             lineHeight: 1.15,
             marginBottom: "1.1rem",
@@ -68,18 +68,20 @@ export default function Hero() {
         </h1>
         <p
           style={{
-            fontSize: "1.0625rem",
+            fontSize: "clamp(1rem, 1.6vw, 1.1875rem)",
             color: "#334155",
             maxWidth: "36rem",
             margin: "0 0 2rem",
             lineHeight: 1.7,
           }}
         >
-          10년 이상의 경력, 전문 청소팀이 직접 찾아갑니다.
+          10년 이상의 경력,
+          <br className="br-mobile" /> 전문 청소팀이 직접 찾아갑니다.
           <br />
           입주·이사·사무실 청소 전문.
         </p>
         <div
+          className="hero-cta"
           style={{
             display: "flex",
             flexWrap: "wrap",
@@ -98,7 +100,7 @@ export default function Hero() {
         {/* Quick stats */}
         <div
           style={{
-            marginTop: "2.5rem",
+            marginTop: "clamp(1.5rem, 4vw, 2.5rem)",
             display: "grid",
             gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
             gap: "clamp(0.75rem, 3vw, 1.25rem)",
@@ -115,14 +117,14 @@ export default function Hero() {
             <div key={s.label}>
               <div
                 style={{
-                  fontSize: "clamp(1.15rem, 2.4vw, 1.4rem)",
+                  fontSize: "clamp(1.375rem, 3vw, 1.75rem)",
                   fontWeight: 900,
                   color: "#0c1b3a",
                 }}
               >
                 {s.num}
               </div>
-              <div style={{ fontSize: "0.6875rem", color: "#475569", marginTop: "0.2rem" }}>
+              <div style={{ fontSize: "0.75rem", color: "#475569", marginTop: "0.2rem" }}>
                 {s.label}
               </div>
             </div>
@@ -132,6 +134,7 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <div
+        className="hide-mobile"
         style={{
           position: "absolute",
           bottom: "2rem",

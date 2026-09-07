@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useIsMobile } from "../../hooks/useIsMobile";
+
 const ZONES = [
   {
     title: "주방",
@@ -50,6 +53,9 @@ const ZONES = [
 ];
 
 export default function CleaningScope() {
+  const isMobile = useIsMobile();
+  const [open, setOpen] = useState<number | null>(null);
+
   return (
     <section id="scope" style={{ padding: "clamp(3.5rem, 10vw, 6rem) 0", backgroundColor: "#f8fafc" }}>
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0 1.25rem" }}>
@@ -70,45 +76,136 @@ export default function CleaningScope() {
             gap: "1.5rem",
           }}
         >
-          {ZONES.map((z) => (
-            <div
-              key={z.title}
-              style={{
-                backgroundColor: "white",
-                padding: "1.5rem",
-                border: "1px solid #e2e8f0",
-              }}
-            >
-              <div style={{ fontSize: "1.875rem", marginBottom: "1rem" }}>{z.emoji}</div>
-              <h3
-                style={{
-                  fontSize: "1.125rem",
-                  fontWeight: 700,
-                  color: "#0c1b3a",
-                  marginBottom: "1rem",
-                }}
-              >
-                {z.title}
-              </h3>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                {z.items.map((item) => (
-                  <li
-                    key={item}
+          {ZONES.map((z, i) => {
+            const isOpen = open === i;
+
+            if (!isMobile) {
+              return (
+                <div
+                  key={z.title}
+                  style={{
+                    backgroundColor: "white",
+                    padding: "1.5rem",
+                    border: "1px solid #e2e8f0",
+                  }}
+                >
+                  <div style={{ fontSize: "1.875rem", marginBottom: "1rem" }}>{z.emoji}</div>
+                  <h3
                     style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: "0.5rem",
-                      fontSize: "0.875rem",
-                      color: "#475569",
+                      fontSize: "1.125rem",
+                      fontWeight: 700,
+                      color: "#0c1b3a",
+                      marginBottom: "1rem",
                     }}
                   >
-                    <span style={{ color: "#3b82f6", marginTop: "0.125rem", flexShrink: 0 }}>·</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                    {z.title}
+                  </h3>
+                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                    {z.items.map((item) => (
+                      <li
+                        key={item}
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: "0.5rem",
+                          fontSize: "0.875rem",
+                          color: "#475569",
+                        }}
+                      >
+                        <span style={{ color: "#3b82f6", marginTop: "0.125rem", flexShrink: 0 }}>·</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            }
+
+            // Mobile: compact accordion
+            return (
+              <div
+                key={z.title}
+                style={{
+                  backgroundColor: "white",
+                  padding: "1.25rem",
+                  border: "1px solid #e2e8f0",
+                }}
+              >
+                <button
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="tap"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                    width: "100%",
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    margin: 0,
+                    cursor: "pointer",
+                    textAlign: "left",
+                    fontFamily: "inherit",
+                    color: "inherit",
+                  }}
+                >
+                  <span style={{ fontSize: "1.5rem" }}>{z.emoji}</span>
+                  <span style={{ flexGrow: 1, minWidth: 0 }}>
+                    <span style={{ display: "block", fontSize: "1rem", fontWeight: 700, color: "#0c1b3a" }}>
+                      {z.title}
+                    </span>
+                    <span style={{ display: "block", fontSize: "0.75rem", color: "#94a3b8", marginTop: "0.125rem" }}>
+                      {z.items.length}개 항목
+                    </span>
+                  </span>
+                  <svg
+                    fill="none"
+                    stroke="#94a3b8"
+                    viewBox="0 0 24 24"
+                    style={{
+                      width: "1.25rem",
+                      height: "1.25rem",
+                      flexShrink: 0,
+                      transition: "transform 0.2s",
+                      transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                    }}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                </button>
+
+                {isOpen && (
+                  <ul
+                    style={{
+                      listStyle: "none",
+                      padding: 0,
+                      margin: 0,
+                      marginTop: "1rem",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.5rem",
+                    }}
+                  >
+                    {z.items.map((item) => (
+                      <li
+                        key={item}
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: "0.5rem",
+                          fontSize: "0.875rem",
+                          color: "#475569",
+                        }}
+                      >
+                        <span style={{ color: "#3b82f6", marginTop: "0.125rem", flexShrink: 0 }}>·</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         <div

@@ -102,7 +102,7 @@ export default function Contact() {
             style={{
               backgroundColor: "white",
               border: "1px solid #e2e8f0",
-              padding: "2rem",
+              padding: "clamp(1.25rem, 4vw, 2rem)",
             }}
           >
             {submitted ? (
@@ -127,6 +127,7 @@ export default function Contact() {
                       value={form.name}
                       onChange={set("name")}
                       placeholder="홍길동"
+                      className="field"
                       style={fieldStyle}
                     />
                   </div>
@@ -137,6 +138,7 @@ export default function Contact() {
                       value={form.phone}
                       onChange={set("phone")}
                       placeholder="010-0000-0000"
+                      className="field"
                       style={fieldStyle}
                     />
                   </div>
@@ -149,6 +151,7 @@ export default function Contact() {
                     value={form.address}
                     onChange={set("address")}
                     placeholder="서울시 강남구 ..."
+                    className="field"
                     style={fieldStyle}
                   />
                 </div>
@@ -160,6 +163,7 @@ export default function Contact() {
                       required
                       value={form.service}
                       onChange={set("service")}
+                      className="field"
                       style={fieldStyle}
                     >
                       <option value="">선택해주세요</option>
@@ -176,6 +180,7 @@ export default function Contact() {
                       value={form.area}
                       onChange={set("area")}
                       placeholder="예: 25평"
+                      className="field"
                       style={fieldStyle}
                     />
                   </div>
@@ -187,6 +192,7 @@ export default function Contact() {
                     type="date"
                     value={form.date}
                     onChange={set("date")}
+                    className="field"
                     style={fieldStyle}
                   />
                 </div>
@@ -198,12 +204,14 @@ export default function Contact() {
                     onChange={set("message")}
                     rows={4}
                     placeholder="특별히 신경 써주셨으면 하는 부분이나 현재 상태를 알려주세요."
+                    className="field"
                     style={{ ...fieldStyle, resize: "none" }}
                   />
                 </div>
 
                 <button
                   type="submit"
+                  className="tap"
                   style={{
                     marginTop: "0.5rem",
                     width: "100%",

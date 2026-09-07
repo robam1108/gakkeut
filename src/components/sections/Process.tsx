@@ -75,16 +75,16 @@ export default function Process() {
               style={{
                 border: "1px solid #bae6fd",
                 backgroundColor: "rgba(255, 255, 255, 0.6)",
-                padding: "1.5rem",
+                padding: "clamp(1.125rem, 4vw, 1.5rem)",
                 display: "flex",
                 gap: "1rem",
               }}
             >
               <div style={{ flexShrink: 0 }}>
-                <div style={{ fontSize: "1.875rem", marginBottom: "0.5rem" }}>{s.icon}</div>
+                <div style={{ fontSize: "clamp(1.5rem, 4vw, 1.875rem)", marginBottom: "0.5rem" }}>{s.icon}</div>
                 <div
                   style={{
-                    fontSize: "3rem",
+                    fontSize: "clamp(2rem, 6vw, 3rem)",
                     fontWeight: 900,
                     color: "#7dd3fc",
                     lineHeight: 1,

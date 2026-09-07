@@ -1,4 +1,5 @@
 import Navbar from "./components/Navbar";
+import MobileCTABar from "./components/MobileCTABar";
 import Hero from "./components/sections/Hero";
 import Trust from "./components/sections/Trust";
 import Services from "./components/sections/Services";
@@ -22,6 +23,7 @@ export default function App() {
       <FAQ />
       <Contact />
       <Footer />
+      <MobileCTABar />
     </div>
   );
 }

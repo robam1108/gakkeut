@@ -47,6 +47,7 @@ export default function FAQ() {
             <div key={i} style={{ borderBottom: i < FAQS.length - 1 ? "1px solid #e2e8f0" : "none" }}>
               <button
                 onClick={() => setOpen(open === i ? null : i)}
+                className="tap"
                 style={{
                   width: "100%",
                   display: "flex",

@@ -98,7 +98,7 @@ export default function BeforeAfter() {
   return (
     <section id="before-after" style={{ padding: "clamp(3.5rem, 10vw, 6rem) 0", backgroundColor: "white" }}>
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0 1.25rem" }}>
-        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+        <div style={{ textAlign: "center", marginBottom: "clamp(2.5rem, 8vw, 4rem)" }}>
           <p className="badge">Before / After</p>
           <h2 className="section-title">직접 확인하세요</h2>
           <p className="section-sub">청소 전·후를 나란히 비교해보세요.</p>
@@ -109,8 +109,9 @@ export default function BeforeAfter() {
             <button
               key={p.label}
               onClick={() => setActive(i)}
+              className="tap"
               style={{
-                padding: "0.5rem 1.25rem",
+                padding: "0.75rem 1.25rem",
                 fontSize: "0.875rem",
                 fontWeight: 600,
                 border: "none",
