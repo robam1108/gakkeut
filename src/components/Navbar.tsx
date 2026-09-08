@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { SITE } from "../config/site";
 
 const NAV_LINKS = [
   { label: "서비스", href: "#services" },
@@ -14,9 +15,23 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [open]);
 
   return (
     <header
@@ -43,7 +58,7 @@ export default function Navbar() {
         }}
       >
         <a
-          href="#"
+          href="#top"
           style={{
             fontSize: "1.5rem",
             fontWeight: 900,
@@ -52,7 +67,8 @@ export default function Navbar() {
             textDecoration: "none",
           }}
         >
-          깨끗<span style={{ color: "#3b82f6" }}>.</span>
+          {SITE.name}
+          <span style={{ color: "#3b82f6" }}>.</span>
         </a>
 
         {/* Desktop */}
@@ -125,9 +141,11 @@ export default function Navbar() {
             minWidth: "44px",
             color: "#1e293b",
           }}
-          aria-label="메뉴"
+          aria-label={open ? "메뉴 닫기" : "메뉴 열기"}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
         >
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: "1.5rem", height: "1.5rem" }}>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: "1.5rem", height: "1.5rem" }} aria-hidden="true">
             {open ? (
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             ) : (
@@ -140,6 +158,7 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div
+          id="mobile-menu"
           style={{
             backgroundColor: "white",
             borderTop: "1px solid #f1f5f9",
@@ -165,38 +184,8 @@ export default function Navbar() {
               {l.label}
             </a>
           ))}
-          <div style={{ padding: "1rem" }}>
-            <a
-              href="#contact-form"
-              onClick={() => setOpen(false)}
-              className="tap"
-              style={{
-                display: "block",
-                width: "100%",
-                textAlign: "center",
-                padding: "0.75rem",
-                backgroundColor: "#0f2356",
-                color: "white",
-                fontWeight: 600,
-                textDecoration: "none",
-              }}
-            >
-              무료 견적 받기
-            </a>
-          </div>
         </div>
       )}
-
-      <style>{`
-        @media (min-width: 768px) {
-          .mobile-menu-btn { display: none !important; }
-          .mobile-menu { display: none !important; }
-        }
-        @media (max-width: 767px) {
-          .desktop-nav { display: none !important; }
-          .desktop-cta { display: none !important; }
-        }
-      `}</style>
     </header>
   );
 }

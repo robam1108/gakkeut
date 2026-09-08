@@ -1,23 +1,19 @@
-const STATS = [
-  { icon: "🏆", num: "12,000+", label: "누적 청소 건수" },
-  { icon: "⭐", num: "98.7%", label: "고객 만족도" },
-  { icon: "🔄", num: "87%", label: "재이용률" },
-  { icon: "📅", num: "10년", label: "업력" },
-];
+import { STATS, BADGES } from "../../config/site";
 
-const BADGES = [
-  { icon: "✅", title: "청소업 정식 등록", desc: "환경부 청소업 등록 사업자" },
-  { icon: "🛡️", title: "배상책임보험 가입", desc: "작업 중 파손·사고 100% 보상" },
-  { icon: "🌿", title: "친환경 약품 사용", desc: "환경부 인증 세제만 사용" },
-  { icon: "👥", title: "직영팀 운영", desc: "외주 없이 직접 교육된 팀만" },
+const TRUST_STATS = [
+  { icon: "🏆", num: STATS.jobsDone, label: "누적 청소 건수" },
+  { icon: "⭐", num: STATS.satisfaction, label: "고객 만족도" },
+  { icon: "🔄", num: STATS.repeatRate, label: "재이용률" },
+  { icon: "📅", num: STATS.yearsInBusiness, label: "업력" },
 ];
 
 export default function Trust() {
   return (
     <section style={{ backgroundColor: "#e0f2fe", padding: "clamp(3rem, 8vw, 5rem) 0" }}>
-      <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0 1.25rem" }}>
+      <div className="container">
         {/* Stats */}
         <div
+          className="hide-mobile"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))",
@@ -25,9 +21,9 @@ export default function Trust() {
             marginBottom: "clamp(2.5rem, 8vw, 5rem)",
           }}
         >
-          {STATS.map((s) => (
+          {TRUST_STATS.map((s) => (
             <div key={s.label} style={{ textAlign: "center" }}>
-              <div style={{ fontSize: "1.875rem", marginBottom: "0.75rem" }}>{s.icon}</div>
+              <div style={{ fontSize: "1.875rem", marginBottom: "0.75rem" }} aria-hidden="true">{s.icon}</div>
               <div style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: "#0c1b3a" }}>
                 {s.num}
               </div>
@@ -40,8 +36,9 @@ export default function Trust() {
 
         {/* Divider */}
         <div
+          className="hide-mobile"
           style={{
-        width: "5rem",
+            width: "5rem",
             height: "1px",
             backgroundColor: "#bae6fd",
             margin: "0 auto clamp(2.5rem, 8vw, 5rem)",
@@ -68,7 +65,7 @@ export default function Trust() {
                 alignItems: "flex-start",
               }}
             >
-              <span style={{ fontSize: "1.5rem", marginTop: "0.125rem" }}>{b.icon}</span>
+              <span style={{ fontSize: "1.5rem", marginTop: "0.125rem" }} aria-hidden="true">{b.icon}</span>
               <div>
                 <div style={{ color: "#0c1b3a", fontWeight: 600, fontSize: "0.875rem", marginBottom: "0.25rem" }}>
                   {b.title}

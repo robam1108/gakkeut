@@ -1,5 +1,4 @@
-// TODO: 실제 카카오톡 채널 URL로 교체
-const KAKAO_URL = "#contact";
+import { SITE } from "../config/site";
 
 export default function MobileCTABar() {
   return (
@@ -18,7 +17,7 @@ export default function MobileCTABar() {
       }}
     >
       <a
-        href="tel:01012345678"
+        href={SITE.phoneHref}
         className="tap"
         style={{
           flex: 1,
@@ -35,11 +34,11 @@ export default function MobileCTABar() {
           textDecoration: "none",
         }}
       >
-        <span style={{ fontSize: "1.125rem" }}>📞</span>
+        <span style={{ fontSize: "1.125rem" }} aria-hidden="true">📞</span>
         전화
       </a>
       <a
-        href={KAKAO_URL}
+        href={SITE.kakaoUrl}
         className="tap"
         style={{
           flex: 1,
@@ -57,7 +56,7 @@ export default function MobileCTABar() {
           borderLeft: "1px solid #e2e8f0",
         }}
       >
-        <span style={{ fontSize: "1.125rem" }}>💬</span>
+        <span style={{ fontSize: "1.125rem" }} aria-hidden="true">💬</span>
         카톡
       </a>
       <a
@@ -78,12 +77,6 @@ export default function MobileCTABar() {
       >
         무료 견적
       </a>
-
-      <style>{`
-        @media (min-width: 768px) {
-          .mobile-cta-bar { display: none !important; }
-        }
-      `}</style>
     </div>
   );
 }

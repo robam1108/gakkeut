@@ -39,27 +39,12 @@ const STEPS = [
 
 export default function Process() {
   return (
-    <section id="process" style={{ padding: "clamp(3.5rem, 10vw, 6rem) 0", backgroundColor: "#e0f2fe" }}>
-      <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0 1.25rem" }}>
+    <section id="process" className="section" style={{ backgroundColor: "#e0f2fe" }}>
+      <div className="container">
         <div style={{ textAlign: "center", marginBottom: "clamp(2.5rem, 8vw, 4rem)" }}>
-          <p
-            style={{
-              color: "#0284c7",
-              fontSize: "0.75rem",
-              fontWeight: 700,
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-              marginBottom: "0.75rem",
-            }}
-          >
-            Work Process
-          </p>
-          <h2 style={{ fontSize: "clamp(1.875rem, 4vw, 2.25rem)", fontWeight: 700, color: "#0c1b3a" }}>
-            작업 과정
-          </h2>
-          <p style={{ color: "#0369a1", marginTop: "0.75rem", fontSize: "1.125rem" }}>
-            처음부터 끝까지 투명하게, 예측 가능하게.
-          </p>
+          <p className="badge badge--sky">Work Process</p>
+          <h2 className="section-title">작업 과정</h2>
+          <p className="section-sub section-sub--sky">처음부터 끝까지 투명하게, 예측 가능하게.</p>
         </div>
 
         <div
@@ -81,7 +66,9 @@ export default function Process() {
               }}
             >
               <div style={{ flexShrink: 0 }}>
-                <div style={{ fontSize: "clamp(1.5rem, 4vw, 1.875rem)", marginBottom: "0.5rem" }}>{s.icon}</div>
+                <div style={{ fontSize: "clamp(1.5rem, 4vw, 1.875rem)", marginBottom: "0.5rem" }} aria-hidden="true">
+                  {s.icon}
+                </div>
                 <div
                   style={{
                     fontSize: "clamp(2rem, 6vw, 3rem)",
@@ -90,6 +77,7 @@ export default function Process() {
                     lineHeight: 1,
                     userSelect: "none",
                   }}
+                  aria-hidden="true"
                 >
                   {s.n}
                 </div>

@@ -3,17 +3,21 @@ import { useState } from "react";
 const PAIRS = [
   {
     label: "주방 입주청소",
-    before: "/images/before-after/주방청소전.png",
-    after: "/images/before-after/주방청소후.png",
+    before: "/images/before-after/kitchen-before.webp",
+    beforeSize: { width: 1081, height: 721 },
+    after: "/images/before-after/kitchen-after.webp",
+    afterSize: { width: 1086, height: 724 },
   },
   {
     label: "욕실 이사청소",
-    before: "/images/before-after/욕실청소전.png",
-    after: "/images/before-after/욕실청소후.png",
+    before: "/images/before-after/bathroom-before.webp",
+    beforeSize: { width: 1082, height: 721 },
+    after: "/images/before-after/bathroom-after.webp",
+    afterSize: { width: 1086, height: 724 },
   },
 ];
 
-function Photo({ src, alt }: { src: string; alt: string }) {
+function Photo({ src, alt, width, height }: { src: string; alt: string; width: number; height: number }) {
   const [missing, setMissing] = useState(false);
 
   if (missing) {
@@ -44,6 +48,10 @@ function Photo({ src, alt }: { src: string; alt: string }) {
     <img
       src={src}
       alt={alt}
+      width={width}
+      height={height}
+      loading="lazy"
+      decoding="async"
       onError={() => setMissing(true)}
       style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
     />
@@ -53,11 +61,15 @@ function Photo({ src, alt }: { src: string; alt: string }) {
 function PhotoCard({
   src,
   alt,
+  width,
+  height,
   label,
   labelBg,
 }: {
   src: string;
   alt: string;
+  width: number;
+  height: number;
   label: string;
   labelBg: string;
 }) {
@@ -71,7 +83,7 @@ function PhotoCard({
         backgroundColor: "#f8fafc",
       }}
     >
-      <Photo src={src} alt={alt} />
+      <Photo src={src} alt={alt} width={width} height={height} />
       <div
         style={{
           position: "absolute",
@@ -96,20 +108,23 @@ export default function BeforeAfter() {
   const pair = PAIRS[active];
 
   return (
-    <section id="before-after" style={{ padding: "clamp(3.5rem, 10vw, 6rem) 0", backgroundColor: "white" }}>
-      <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0 1.25rem" }}>
+    <section id="before-after" className="section" style={{ backgroundColor: "white" }}>
+      <div className="container">
         <div style={{ textAlign: "center", marginBottom: "clamp(2.5rem, 8vw, 4rem)" }}>
           <p className="badge">Before / After</p>
           <h2 className="section-title">직접 확인하세요</h2>
           <p className="section-sub">청소 전·후를 나란히 비교해보세요.</p>
         </div>
 
-        <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", marginBottom: "2rem" }}>
+        <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", marginBottom: "2rem" }} role="tablist">
           {PAIRS.map((p, i) => (
             <button
               key={p.label}
               onClick={() => setActive(i)}
               className="tap"
+              role="tab"
+              aria-pressed={active === i}
+              aria-selected={active === i}
               style={{
                 padding: "0.75rem 1.25rem",
                 fontSize: "0.875rem",
@@ -136,8 +151,22 @@ export default function BeforeAfter() {
             boxShadow: "0 25px 50px rgba(0,0,0,0.15)",
           }}
         >
-          <PhotoCard src={pair.before} alt="청소 전" label="청소 전" labelBg="rgba(30, 41, 59, 0.8)" />
-          <PhotoCard src={pair.after} alt="청소 후" label="청소 후" labelBg="rgba(2, 132, 199, 0.85)" />
+          <PhotoCard
+            src={pair.before}
+            alt="청소 전"
+            width={pair.beforeSize.width}
+            height={pair.beforeSize.height}
+            label="청소 전"
+            labelBg="rgba(30, 41, 59, 0.8)"
+          />
+          <PhotoCard
+            src={pair.after}
+            alt="청소 후"
+            width={pair.afterSize.width}
+            height={pair.afterSize.height}
+            label="청소 후"
+            labelBg="rgba(2, 132, 199, 0.85)"
+          />
         </div>
       </div>
     </section>

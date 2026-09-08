@@ -1,6 +1,15 @@
+import { STATS } from "../../config/site";
+
+const HERO_STATS = [
+  { num: STATS.jobsDone, label: "누적 청소 건수" },
+  { num: STATS.satisfaction, label: "고객 만족도" },
+  { num: STATS.yearsInBusiness, label: "전문 경력" },
+];
+
 export default function Hero() {
   return (
     <section
+      id="top"
       className="hero-section"
       style={{
         position: "relative",
@@ -17,6 +26,7 @@ export default function Hero() {
         <img
           src="/images/hero/hero.jpg"
           alt="깔끔한 인테리어"
+          fetchPriority="high"
           style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
         />
         <div
@@ -99,6 +109,7 @@ export default function Hero() {
 
         {/* Quick stats */}
         <div
+          className="hero-stats"
           style={{
             marginTop: "clamp(1.5rem, 4vw, 2.5rem)",
             display: "grid",
@@ -106,16 +117,12 @@ export default function Hero() {
             gap: "clamp(0.75rem, 3vw, 1.25rem)",
             borderTop: "1px solid rgba(12,27,58,0.15)",
             paddingTop: "1.25rem",
-            maxWidth: "34rem",
           }}
         >
-          {[
-            { num: "12,000+", label: "누적 청소 건수" },
-            { num: "98.7%", label: "고객 만족도" },
-            { num: "10년", label: "전문 경력" },
-          ].map((s) => (
-            <div key={s.label}>
+          {HERO_STATS.map((s) => (
+            <div key={s.label} style={{ textAlign: "center" }}>
               <div
+                className="hero-stat-num"
                 style={{
                   fontSize: "clamp(1.5rem, 3.3vw, 1.9375rem)",
                   fontWeight: 900,
@@ -124,7 +131,7 @@ export default function Hero() {
               >
                 {s.num}
               </div>
-              <div style={{ fontSize: "0.8125rem", color: "#475569", marginTop: "0.2rem" }}>
+              <div className="hero-stat-label" style={{ fontSize: "0.8125rem", color: "#475569", marginTop: "0.2rem" }}>
                 {s.label}
               </div>
             </div>
@@ -146,6 +153,7 @@ export default function Hero() {
           gap: "0.5rem",
           color: "#0369a1",
         }}
+        aria-hidden="true"
       >
         <span style={{ fontSize: "0.75rem", letterSpacing: "0.2em" }}>SCROLL</span>
         <div
@@ -153,7 +161,6 @@ export default function Hero() {
             width: "1px",
             height: "3rem",
             backgroundColor: "rgba(3,105,161,0.4)",
-            animation: "pulse 2s cubic-bezier(0.4,0,0.6,1) infinite",
           }}
         />
       </div>

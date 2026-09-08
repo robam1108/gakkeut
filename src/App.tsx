@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar";
 import MobileCTABar from "./components/MobileCTABar";
+import StructuredData from "./components/StructuredData";
 import Hero from "./components/sections/Hero";
 import Trust from "./components/sections/Trust";
 import Services from "./components/sections/Services";
@@ -13,6 +14,7 @@ import Footer from "./components/Footer";
 export default function App() {
   return (
     <div>
+      <StructuredData />
       <Navbar />
       <Hero />
       <Trust />

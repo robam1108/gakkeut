@@ -52,13 +52,35 @@ const ZONES = [
   },
 ];
 
+function ItemList({ items }: { items: string[] }) {
+  return (
+    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+      {items.map((item) => (
+        <li
+          key={item}
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: "0.5rem",
+            fontSize: "0.875rem",
+            color: "#475569",
+          }}
+        >
+          <span style={{ color: "#3b82f6", marginTop: "0.125rem", flexShrink: 0 }} aria-hidden="true">·</span>
+          {item}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default function CleaningScope() {
   const isMobile = useIsMobile();
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section id="scope" style={{ padding: "clamp(3.5rem, 10vw, 6rem) 0", backgroundColor: "#f8fafc" }}>
-      <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0 1.25rem" }}>
+    <section id="scope" className="section" style={{ backgroundColor: "#f8fafc" }}>
+      <div className="container">
         <div style={{ textAlign: "center", marginBottom: "clamp(2.5rem, 8vw, 4rem)" }}>
           <p className="badge">Cleaning Scope</p>
           <h2 className="section-title">청소 범위</h2>
@@ -89,7 +111,7 @@ export default function CleaningScope() {
                     border: "1px solid #e2e8f0",
                   }}
                 >
-                  <div style={{ fontSize: "1.875rem", marginBottom: "1rem" }}>{z.emoji}</div>
+                  <div style={{ fontSize: "1.875rem", marginBottom: "1rem" }} aria-hidden="true">{z.emoji}</div>
                   <h3
                     style={{
                       fontSize: "1.125rem",
@@ -100,28 +122,13 @@ export default function CleaningScope() {
                   >
                     {z.title}
                   </h3>
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                    {z.items.map((item) => (
-                      <li
-                        key={item}
-                        style={{
-                          display: "flex",
-                          alignItems: "flex-start",
-                          gap: "0.5rem",
-                          fontSize: "0.875rem",
-                          color: "#475569",
-                        }}
-                      >
-                        <span style={{ color: "#3b82f6", marginTop: "0.125rem", flexShrink: 0 }}>·</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                  <ItemList items={z.items} />
                 </div>
               );
             }
 
             // Mobile: compact accordion
+            const panelId = `scope-panel-${i}`;
             return (
               <div
                 key={z.title}
@@ -134,6 +141,8 @@ export default function CleaningScope() {
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
                   className="tap"
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -149,7 +158,7 @@ export default function CleaningScope() {
                     color: "inherit",
                   }}
                 >
-                  <span style={{ fontSize: "1.5rem" }}>{z.emoji}</span>
+                  <span style={{ fontSize: "1.5rem" }} aria-hidden="true">{z.emoji}</span>
                   <span style={{ flexGrow: 1, minWidth: 0 }}>
                     <span style={{ display: "block", fontSize: "1rem", fontWeight: 700, color: "#0c1b3a" }}>
                       {z.title}
@@ -169,39 +178,16 @@ export default function CleaningScope() {
                       transition: "transform 0.2s",
                       transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
                     }}
+                    aria-hidden="true"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
                 </button>
 
                 {isOpen && (
-                  <ul
-                    style={{
-                      listStyle: "none",
-                      padding: 0,
-                      margin: 0,
-                      marginTop: "1rem",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "0.5rem",
-                    }}
-                  >
-                    {z.items.map((item) => (
-                      <li
-                        key={item}
-                        style={{
-                          display: "flex",
-                          alignItems: "flex-start",
-                          gap: "0.5rem",
-                          fontSize: "0.875rem",
-                          color: "#475569",
-                        }}
-                      >
-                        <span style={{ color: "#3b82f6", marginTop: "0.125rem", flexShrink: 0 }}>·</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                  <div id={panelId} style={{ marginTop: "1rem" }}>
+                    <ItemList items={z.items} />
+                  </div>
                 )}
               </div>
             );

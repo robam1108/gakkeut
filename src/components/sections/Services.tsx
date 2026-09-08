@@ -52,13 +52,45 @@ const SERVICES = [
   },
 ];
 
+function ItemList({ items, highlight, compact }: { items: string[]; highlight: boolean; compact?: boolean }) {
+  return (
+    <ul
+      style={{
+        listStyle: "none",
+        padding: 0,
+        margin: compact ? 0 : "0 0 1.5rem",
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.375rem",
+        flexGrow: compact ? 0 : 1,
+      }}
+    >
+      {items.map((item) => (
+        <li
+          key={item}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            fontSize: "0.875rem",
+            color: highlight ? "#dbeafe" : "#475569",
+          }}
+        >
+          <span style={{ color: highlight ? "#3b82f6" : "#2563eb" }} aria-hidden="true">✓</span>
+          {item}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default function Services() {
   const isMobile = useIsMobile();
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section id="services" style={{ padding: "clamp(3.5rem, 10vw, 6rem) 0", backgroundColor: "#f8fafc" }}>
-      <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0 1.25rem" }}>
+    <section id="services" className="section" style={{ backgroundColor: "#f8fafc" }}>
+      <div className="container">
         <div style={{ textAlign: "center", marginBottom: "clamp(2.5rem, 8vw, 4rem)" }}>
           <p className="badge">Services</p>
           <h2 className="section-title">전문 청소 서비스</h2>
@@ -90,7 +122,7 @@ export default function Services() {
             if (!isMobile) {
               return (
                 <div key={s.title} style={cardStyle}>
-                  <span style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>{s.emoji}</span>
+                  <span style={{ fontSize: "2.5rem", marginBottom: "1rem" }} aria-hidden="true">{s.emoji}</span>
                   <h3
                     style={{
                       fontSize: "1.25rem",
@@ -112,33 +144,7 @@ export default function Services() {
                   >
                     {s.desc}
                   </p>
-                  <ul
-                    style={{
-                      listStyle: "none",
-                      padding: 0,
-                      margin: "0 0 1.5rem",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "0.375rem",
-                      flexGrow: 1,
-                    }}
-                  >
-                    {s.items.map((item) => (
-                      <li
-                        key={item}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "0.5rem",
-                          fontSize: "0.875rem",
-                          color: s.highlight ? "#dbeafe" : "#475569",
-                        }}
-                      >
-                        <span style={{ color: s.highlight ? "#3b82f6" : "#2563eb" }}>✓</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                  <ItemList items={s.items} highlight={s.highlight} />
                   <div
                     style={{
                       paddingTop: "1rem",
@@ -160,11 +166,14 @@ export default function Services() {
             }
 
             // Mobile: compact accordion
+            const panelId = `service-panel-${i}`;
             return (
               <div key={s.title} style={{ ...cardStyle, padding: "1.25rem" }}>
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
                   className="tap"
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -180,7 +189,7 @@ export default function Services() {
                     color: "inherit",
                   }}
                 >
-                  <span style={{ fontSize: "1.75rem" }}>{s.emoji}</span>
+                  <span style={{ fontSize: "1.75rem" }} aria-hidden="true">{s.emoji}</span>
                   <span style={{ flexGrow: 1, minWidth: 0 }}>
                     <span
                       style={{
@@ -215,13 +224,14 @@ export default function Services() {
                       transition: "transform 0.2s",
                       transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
                     }}
+                    aria-hidden="true"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
                 </button>
 
                 {isOpen && (
-                  <div style={{ marginTop: "1rem" }}>
+                  <div id={panelId} style={{ marginTop: "1rem" }}>
                     <p
                       style={{
                         fontSize: "0.875rem",
@@ -232,32 +242,7 @@ export default function Services() {
                     >
                       {s.desc}
                     </p>
-                    <ul
-                      style={{
-                        listStyle: "none",
-                        padding: 0,
-                        margin: 0,
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "0.375rem",
-                      }}
-                    >
-                      {s.items.map((item) => (
-                        <li
-                          key={item}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "0.5rem",
-                            fontSize: "0.875rem",
-                            color: s.highlight ? "#dbeafe" : "#475569",
-                          }}
-                        >
-                          <span style={{ color: s.highlight ? "#3b82f6" : "#2563eb" }}>✓</span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+                    <ItemList items={s.items} highlight={s.highlight} compact />
                   </div>
                 )}
               </div>

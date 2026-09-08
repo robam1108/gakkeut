@@ -33,18 +33,50 @@
 html {
   scroll-behavior: smooth;
 }
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 section[id] {
   scroll-margin-top: 4rem;
 }
 body {
-  font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-family: var(--font-family-sans);
   color: var(--color-gray-800);
   background-color: white;
   margin: 0;
 }
+a,
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus {
+  text-decoration: none;
+}
+:focus-visible {
+  outline: 2px solid var(--color-sky-600);
+  outline-offset: 2px;
+}
 #root {
   width: 100%;
   min-height: 100vh;
+}
+
+.container {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.section {
+  padding: clamp(3.5rem, 10vw, 6rem) 0;
 }
 
 .btn-primary,
@@ -96,8 +128,35 @@ body {
   color: var(--color-navy-500);
   margin-bottom: 0.75rem;
 }
+.badge--sky {
+  color: var(--color-sky-600);
+  letter-spacing: 0.3em;
+}
+
+.section-sub--sky {
+  color: var(--color-sky-700);
+}
+
+@media (min-width: 768px) {
+  .mobile-menu-btn {
+    display: none !important;
+  }
+  .mobile-menu {
+    display: none !important;
+  }
+  .mobile-cta-bar {
+    display: none !important;
+  }
+}
 
 @media (max-width: 767px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .desktop-cta {
+    display: none !important;
+  }
+
   .hide-mobile {
     display: none !important;
   }
@@ -158,6 +217,20 @@ body {
   }
   .tap:active {
     opacity: 0.75;
+  }
+
+  .hero-stats {
+    gap: 0.5rem !important;
+  }
+  .hero-stat-num {
+    font-size: clamp(1.125rem, 5.2vw, 1.5rem) !important;
+    white-space: nowrap;
+    letter-spacing: -0.02em;
+  }
+  .hero-stat-label {
+    font-size: clamp(0.6875rem, 3.2vw, 0.8125rem) !important;
+    white-space: nowrap;
+    letter-spacing: -0.02em;
   }
 }
 
