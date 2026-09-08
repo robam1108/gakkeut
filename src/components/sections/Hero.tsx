@@ -65,6 +65,7 @@ export default function Hero() {
         </p>
         <h1
           style={{
+            fontFamily: "'Paperlogy', var(--font-family-sans)",
             fontSize: "clamp(2.25rem, 7.2vw, 4.5rem)",
             fontWeight: 900,
             lineHeight: 1.15,
