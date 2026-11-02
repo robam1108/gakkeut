@@ -18,17 +18,17 @@ npm run build     # 타입 체크 + 프로덕션 빌드
 npm run lint      # oxlint
 ```
 
-## 견적 폼 전송 (Web3Forms)
+## 견적 폼 전송 (Formspree)
 
-`.env.example` 을 `.env` 로 복사하고 `VITE_WEB3FORMS_ACCESS_KEY` 를 채우세요.
+`.env.example` 을 `.env` 로 복사하고 `VITE_FORMSPREE_ENDPOINT` 를 채우세요. 배포 환경은 Vercel 프로젝트 환경 변수에 설정합니다.
 
 | 상태 | 동작 |
 |---|---|
-| 키 없음 | **테스트 모드** — 전송하지 않고 "실제로 전송되지 않았습니다" 화면 표시, payload는 콘솔 출력 |
-| 키 있음 | `api.web3forms.com/submit` 으로 POST. HTTP 성공 **그리고** `success: true` 일 때만 접수 완료 화면 |
+| 엔드포인트 없음 | **테스트 모드** — 전송하지 않고 "실제로 전송되지 않았습니다" 화면 표시, payload는 콘솔 출력 |
+| 엔드포인트 있음 | Formspree 엔드포인트로 POST. HTTP 성공 **그리고** `ok: true` 일 때만 접수 완료 화면 |
 | 실패/타임아웃(10초) | 실패 화면, 입력 내용 유지, 다시 시도 |
 
-스팸 방지: 허니팟(`botcheck`) + 열람 후 3초 이내 제출 차단. 중복 제출은 ref 잠금으로 막습니다.
+스팸 방지: 허니팟(`botcheck` → Formspree `_gotcha`) + 열람 후 3초 이내 제출 차단. 중복 제출은 ref 잠금으로 막습니다.
 입력 중인 내용은 sessionStorage에 보관되어 새로고침해도 유지됩니다(개인정보 동의 체크는 저장하지 않음).
 
 ## 구조

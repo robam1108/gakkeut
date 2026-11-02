@@ -1,11 +1,10 @@
 import type { EstimateData } from "./model";
 
-const ACCESS_KEY = (import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string | undefined)?.trim() || "";
-const ENDPOINT = "https://api.web3forms.com/submit";
+const ENDPOINT = (import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined)?.trim() || "";
 const TIMEOUT_MS = 10_000;
 
-// 키가 없으면 테스트 모드 — 실제 전송 없이 결과 화면만 확인할 수 있다 (성공으로 표시하지 않음)
-export const IS_TEST_MODE = !ACCESS_KEY;
+// 엔드포인트가 없으면 테스트 모드 — 실제 전송 없이 결과 화면만 확인할 수 있다 (성공으로 표시하지 않음)
+export const IS_TEST_MODE = !ENDPOINT;
 
 export type SubmitResult =
   | { ok: true; mode: "live" | "test" }
@@ -13,8 +12,7 @@ export type SubmitResult =
 
 export async function submitEstimate(data: EstimateData, botcheck: string): Promise<SubmitResult> {
   const payload = {
-    subject: `[견적 신청] ${data.serviceType} · ${data.size}평 · ${data.region} ${data.regionDetail}`,
-    from_name: "GAKKEUT 홈페이지",
+    _subject: `[견적 신청] ${data.serviceType} · ${data.size}평 · ${data.region} ${data.regionDetail}`,
     청소_종류: data.serviceType,
     공간_면적: `${data.size}평`,
     작업_지역: `${data.region} ${data.regionDetail}`,
@@ -40,13 +38,13 @@ export async function submitEstimate(data: EstimateData, botcheck: string): Prom
     const res = await fetch(ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ access_key: ACCESS_KEY, botcheck, ...payload }),
+      body: JSON.stringify({ _gotcha: botcheck, ...payload }),
       signal: controller.signal,
     });
-    const json = (await res.json().catch(() => null)) as { success?: boolean; message?: string } | null;
+    const json = (await res.json().catch(() => null)) as { ok?: boolean; errors?: { message?: string }[] } | null;
     // HTTP 상태와 응답 본문 둘 다 성공일 때만 성공으로 본다
-    if (res.ok && json?.success === true) return { ok: true, mode: "live" };
-    return { ok: false, reason: "server", message: json?.message };
+    if (res.ok && json?.ok === true) return { ok: true, mode: "live" };
+    return { ok: false, reason: "server", message: json?.errors?.[0]?.message };
   } catch (err) {
     return { ok: false, reason: err instanceof DOMException && err.name === "AbortError" ? "timeout" : "network" };
   } finally {

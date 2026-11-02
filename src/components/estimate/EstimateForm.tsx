@@ -385,7 +385,7 @@ function ResultView({ result, ref, onReset, onBack, onRetry }: ResultProps) {
         <p className={styles.resultDesc}>
           입력값 검증과 전송 흐름만 확인했습니다. 신청 내용은 브라우저 콘솔에 출력되었습니다.
           <br />
-          실제 접수를 받으려면 <code>VITE_WEB3FORMS_ACCESS_KEY</code>를 설정하세요.
+          실제 접수를 받으려면 <code>VITE_FORMSPREE_ENDPOINT</code>를 설정하세요.
         </p>
         <div className={styles.resultActions}>
           <button type="button" className="btn btn--ghost" onClick={onBack}>
