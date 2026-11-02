@@ -57,7 +57,10 @@ export const STEPS = [
   { title: "최종 확인", fields: ["consent"] },
 ] as const satisfies { title: string; fields: FieldKey[] }[];
 
-export const fieldId = (k: FieldKey) => `est-${k}`;
+// 서비스 섹션의 "○○ 견적 받기" → 견적 폼의 청소 종류 미리 선택
+export const SELECT_SERVICE_EVENT = "gakkeut:select-service";
+
+export const fieldId =(k: FieldKey) => `est-${k}`;
 export const errorId = (k: FieldKey) => `est-${k}-error`;
 
 // 입력 요소에 붙이는 공통 aria 속성 (오류 > 힌트 순으로 describedby 연결)

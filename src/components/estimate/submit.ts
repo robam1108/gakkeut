@@ -23,7 +23,7 @@ export async function submitEstimate(data: EstimateData, botcheck: string): Prom
     추가_요청사항: data.extraNote || "-",
     이름: data.name.trim(),
     연락처: data.phone,
-    상세_주소: data.address.trim(),
+    상세_주소: data.address.trim() || "-",
     추가_문의: data.message || "-",
     개인정보_동의: data.consent ? "동의" : "미동의",
   };

@@ -46,8 +46,6 @@ function validateAll(data: EstimateData): Errors {
   if (!data.phone.trim()) e.phone = "연락처를 입력해주세요.";
   else if (!isValidPhone(data.phone)) e.phone = "연락처 형식을 확인해주세요. 예) 010-1234-5678";
 
-  if (!data.address.trim()) e.address = "청소할 곳의 상세 주소를 입력해주세요.";
-
   if (!data.consent) e.consent = "개인정보 수집 및 이용에 동의해야 신청할 수 있습니다.";
 
   return e;

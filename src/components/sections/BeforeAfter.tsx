@@ -57,7 +57,7 @@ export default function BeforeAfter() {
             id="cases-title"
             eyebrow="Before & After"
             title="작업 전후의 차이를 확인하세요"
-            desc="같은 공간을 작업 전과 후로 비교합니다. 가운데 손잡이를 좌우로 움직여 보세요."
+            desc="오염 유형별로 작업 전후가 어떻게 달라지는지 예시로 보여드립니다. 가운데 손잡이를 좌우로 움직여 보세요."
           />
           <div className={styles.switch} role="group" aria-label="비교할 공간 선택">
             {PAIRS.map((p, i) => (

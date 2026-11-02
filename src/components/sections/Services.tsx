@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { SERVICES } from "../../content/services";
+import { SELECT_SERVICE_EVENT } from "../estimate/model";
 import SectionHeader from "../ui/SectionHeader";
 import Icon from "../ui/Icon";
 import styles from "./Services.module.css";
@@ -94,7 +95,11 @@ export default function Services() {
                   </li>
                 ))}
               </ul>
-              <a href="#estimate" className={`btn btn--ghost ${styles.cta}`}>
+              <a
+                href="#estimate"
+                className={`btn btn--ghost ${styles.cta}`}
+                onClick={() => window.dispatchEvent(new CustomEvent(SELECT_SERVICE_EVENT, { detail: s.title }))}
+              >
                 {s.title} 견적 받기
                 <Icon name="arrowRight" size={18} />
               </a>

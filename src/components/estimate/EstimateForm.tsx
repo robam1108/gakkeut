@@ -5,7 +5,7 @@ import Icon from "../ui/Icon";
 import StepCleaning from "./StepCleaning";
 import StepCustomer from "./StepCustomer";
 import StepReview from "./StepReview";
-import { INITIAL_DATA, STEPS, fieldId, type EstimateData, type Errors, type FieldKey } from "./model";
+import { INITIAL_DATA, SELECT_SERVICE_EVENT, STEPS, fieldId, type EstimateData, type Errors, type FieldKey } from "./model";
 import { validateStep } from "./validation";
 import { IS_TEST_MODE, submitEstimate, type SubmitResult } from "./submit";
 import styles from "./Estimate.module.css";
@@ -75,6 +75,20 @@ export default function EstimateForm() {
   useEffect(() => {
     if (status === "done") resultRef.current?.focus();
   }, [status]);
+
+  useEffect(() => {
+    const onSelect = (e: Event) => {
+      const service = (e as CustomEvent<string>).detail;
+      setData((d) => ({ ...d, serviceType: service }));
+      setErrors((errs) => {
+        const next = { ...errs };
+        delete next.serviceType;
+        return next;
+      });
+    };
+    window.addEventListener(SELECT_SERVICE_EVENT, onSelect);
+    return () => window.removeEventListener(SELECT_SERVICE_EVENT, onSelect);
+  }, []);
 
   const set: SetField = (key, value) => {
     setData((d) => ({ ...d, [key]: value }));
@@ -183,17 +197,16 @@ export default function EstimateForm() {
               입력하신 정보는 견적 상담 목적으로만 사용됩니다.
             </li>
           </ul>
-          <div className={styles.introContact}>
-            <p className={styles.introContactLabel}>전화 상담</p>
-            {phoneHref ? (
+          {/* 대표 번호가 등록된 경우에만 노출 — 플레이스홀더를 크게 보여주지 않는다 */}
+          {phoneHref && (
+            <div className={styles.introContact}>
+              <p className={styles.introContactLabel}>전화 상담</p>
               <a href={phoneHref} className={styles.introPhone}>
                 {siteValue("phone")}
               </a>
-            ) : (
-              <p className={styles.introPhone}>{siteValue("phone")}</p>
-            )}
-            <p className={styles.introHours}>{siteValue("hours")}</p>
-          </div>
+              <p className={styles.introHours}>{siteValue("hours")}</p>
+            </div>
+          )}
         </aside>
 
         <div className={styles.panel}>
@@ -348,8 +361,12 @@ function ResultView({ result, ref, onReset, onBack, onRetry }: ResultProps) {
         <h3 className={styles.resultTitle}>견적 신청이 접수되었습니다</h3>
         <p className={styles.resultDesc}>
           남겨주신 연락처로 상담 연락을 드리겠습니다.
-          <br />
-          급한 문의는 전화로 연락해주세요.
+          {phoneHref && (
+            <>
+              <br />
+              급한 문의는 전화로 연락해주세요.
+            </>
+          )}
         </p>
         <button type="button" className="btn btn--ghost" onClick={onReset}>
           새 견적 신청하기

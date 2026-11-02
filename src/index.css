@@ -1,5 +1,25 @@
 @import "./styles/tokens.css";
 
+/* 제목용 — 부산단디고딕 (눈누) */
+@font-face {
+  font-family: "BusanDandiGothic";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/2610132210@l/l/부산단디고딕L.woff2") format("woff2");
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: "BusanDandiGothic";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/2610132210@l/l/부산단디고딕M.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "BusanDandiGothic";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/2610132210@l/l/부산단디고딕B.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
 *,
 *::before,
 *::after {
@@ -34,6 +54,12 @@ dl,
 dd,
 figure {
   margin: 0;
+}
+
+/* 섹션 메인 제목(h1, h2)만 제목 폰트 */
+h1,
+h2 {
+  font-family: var(--font-heading);
 }
 
 ul,

@@ -25,7 +25,7 @@ export default function StepReview({ data, errors, set, goTo }: Props) {
       rows: [
         ["이름", data.name],
         ["연락처", data.phone],
-        ["상세 주소", data.address],
+        ["상세 주소", data.address.trim() || "상담 시 안내"],
         ["추가 문의사항", data.message || "없음"],
       ],
     },

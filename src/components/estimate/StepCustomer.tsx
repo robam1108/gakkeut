@@ -37,9 +37,9 @@ export default function StepCustomer({ data, errors, set }: Props) {
         </Field>
       </div>
 
-      <Field name="address" label="상세 주소" required hint="청소할 공간의 주소를 입력해주세요." error={errors.address}>
+      <Field name="address" label="상세 주소" hint="미리 알려주시면 상담이 더 빨라집니다." error={errors.address}>
         <input
-          {...a11yProps("address", errors.address, true, true)}
+          {...a11yProps("address", errors.address, true)}
           type="text"
           autoComplete="street-address"
           placeholder="예) ○○아파트 101동 1001호"
