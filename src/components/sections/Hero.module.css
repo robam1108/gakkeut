@@ -1,0 +1,110 @@
+.hero {
+  padding-top: calc(var(--header-h) + clamp(2rem, 5vw, 4.5rem));
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 11fr) minmax(0, 13fr);
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.copy {
+  padding-bottom: 1rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-secondary);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+
+.title {
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.035em;
+  color: var(--c-primary);
+}
+
+.lead {
+  margin-top: 1.75rem;
+  max-width: 30rem;
+  font-size: var(--fs-lead);
+  line-height: 1.75;
+  color: var(--c-muted-strong);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+.note {
+  margin-top: 2.25rem;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.02em;
+  color: var(--c-muted);
+}
+
+.media {
+  position: relative;
+  /* 오른쪽은 컨테이너를 넘어 화면 끝까지 붙여 비대칭감을 준다 */
+  margin-right: calc(-1 * max(var(--gutter), (100vw - var(--container)) / 2));
+  aspect-ratio: 4 / 3.4;
+  border-radius: var(--r-lg) 0 0 var(--r-lg);
+  overflow: hidden;
+  background-color: var(--c-border);
+}
+
+.media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 959px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .media {
+    order: -1;
+    margin: 0 calc(-1 * var(--gutter));
+    aspect-ratio: 16 / 10;
+    border-radius: 0;
+  }
+
+  .hero {
+    padding-top: var(--header-h);
+  }
+}
+
+@media (max-width: 599px) {
+  .br {
+    display: none;
+  }
+
+  .actions .btn,
+  .actions a {
+    flex: 1 1 100%;
+  }
+}

@@ -1,173 +1,141 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import SectionHeader from "../ui/SectionHeader";
+import Icon from "../ui/Icon";
+import styles from "./BeforeAfter.module.css";
 
+// 데모용 예시 이미지. 실제 시공 사진이 생기면 같은 공간·같은 구도의 전후 사진으로 교체하세요.
 const PAIRS = [
   {
-    label: "주방 입주청소",
+    id: "kitchen",
+    label: "주방",
     before: "/images/before-after/kitchen-before.webp",
-    beforeSize: { width: 1081, height: 721 },
     after: "/images/before-after/kitchen-after.webp",
-    afterSize: { width: 1086, height: 724 },
+    alt: "주방 싱크대와 상판",
   },
   {
-    label: "욕실 이사청소",
+    id: "bathroom",
+    label: "욕실",
     before: "/images/before-after/bathroom-before.webp",
-    beforeSize: { width: 1082, height: 721 },
     after: "/images/before-after/bathroom-after.webp",
-    afterSize: { width: 1086, height: 724 },
+    alt: "욕실 세면대와 타일",
   },
 ];
 
-function Photo({ src, alt, width, height }: { src: string; alt: string; width: number; height: number }) {
-  const [missing, setMissing] = useState(false);
-
-  if (missing) {
-    return (
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          padding: "1rem",
-          backgroundColor: "#f1f5f9",
-          color: "#94a3b8",
-          fontSize: "0.8rem",
-          lineHeight: 1.6,
-        }}
-      >
-        이미지 없음
-        <br />
-        {src}
-      </div>
-    );
-  }
-
-  return (
-    <img
-      src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      loading="lazy"
-      decoding="async"
-      onError={() => setMissing(true)}
-      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-    />
-  );
-}
-
-function PhotoCard({
-  src,
-  alt,
-  width,
-  height,
-  label,
-  labelBg,
-}: {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-  label: string;
-  labelBg: string;
-}) {
-  return (
-    <div
-      style={{
-        position: "relative",
-        width: "100%",
-        aspectRatio: "3/2",
-        overflow: "hidden",
-        backgroundColor: "#f8fafc",
-      }}
-    >
-      <Photo src={src} alt={alt} width={width} height={height} />
-      <div
-        style={{
-          position: "absolute",
-          bottom: "1rem",
-          left: "1rem",
-          backgroundColor: labelBg,
-          color: "white",
-          fontSize: "0.75rem",
-          fontWeight: 600,
-          padding: "0.375rem 0.75rem",
-          backdropFilter: "blur(4px)",
-        }}
-      >
-        {label}
-      </div>
-    </div>
-  );
-}
-
 export default function BeforeAfter() {
-  const [active, setActive] = useState(0);
-  const pair = PAIRS[active];
+  const [pairIdx, setPairIdx] = useState(0);
+  const [pos, setPos] = useState(50);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const dragging = useRef(false);
+  const pair = PAIRS[pairIdx];
+
+  const updateFromX = (clientX: number) => {
+    const rect = frameRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const pct = ((clientX - rect.left) / rect.width) * 100;
+    setPos(Math.min(100, Math.max(0, pct)));
+  };
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    dragging.current = true;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    updateFromX(e.clientX);
+  };
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (dragging.current) updateFromX(e.clientX);
+  };
+
+  const stop = () => {
+    dragging.current = false;
+  };
 
   return (
-    <section id="before-after" className="section" style={{ backgroundColor: "white" }}>
+    <section id="cases" className="section section--surface" aria-labelledby="cases-title">
       <div className="container">
-        <div style={{ textAlign: "center", marginBottom: "clamp(2.5rem, 8vw, 4rem)" }}>
-          <p className="badge">Before / After</p>
-          <h2 className="section-title">직접 확인하세요</h2>
-          <p className="section-sub">청소 전·후를 나란히 비교해보세요.</p>
-        </div>
-
-        <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", marginBottom: "2rem" }} role="tablist">
-          {PAIRS.map((p, i) => (
-            <button
-              key={p.label}
-              onClick={() => setActive(i)}
-              className="tap"
-              role="tab"
-              aria-pressed={active === i}
-              aria-selected={active === i}
-              style={{
-                padding: "0.75rem 1.25rem",
-                fontSize: "0.875rem",
-                fontWeight: 600,
-                border: "none",
-                cursor: "pointer",
-                transition: "all 0.2s",
-                backgroundColor: active === i ? "#0284c7" : "#f1f5f9",
-                color: active === i ? "white" : "#475569",
-              }}
-            >
-              {p.label}
-            </button>
-          ))}
+        <div className={styles.head}>
+          <SectionHeader
+            id="cases-title"
+            eyebrow="Before & After"
+            title="작업 전후의 차이를 확인하세요"
+            desc="같은 공간을 작업 전과 후로 비교합니다. 가운데 손잡이를 좌우로 움직여 보세요."
+          />
+          <div className={styles.switch} role="group" aria-label="비교할 공간 선택">
+            {PAIRS.map((p, i) => (
+              <button
+                key={p.id}
+                type="button"
+                aria-pressed={i === pairIdx}
+                className={`${styles.switchBtn} ${i === pairIdx ? styles.switchActive : ""}`}
+                onClick={() => {
+                  setPairIdx(i);
+                  setPos(50);
+                }}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div
-          style={{
-            maxWidth: "64rem",
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(min(260px, 100%), 1fr))",
-            gap: "1.5rem",
-            boxShadow: "0 25px 50px rgba(0,0,0,0.15)",
-          }}
+          ref={frameRef}
+          className={styles.frame}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={stop}
+          onPointerCancel={stop}
+          style={{ "--pos": `${pos}%` } as React.CSSProperties}
         >
-          <PhotoCard
-            src={pair.before}
-            alt="청소 전"
-            width={pair.beforeSize.width}
-            height={pair.beforeSize.height}
-            label="청소 전"
-            labelBg="rgba(30, 41, 59, 0.8)"
-          />
-          <PhotoCard
+          <img
             src={pair.after}
-            alt="청소 후"
-            width={pair.afterSize.width}
-            height={pair.afterSize.height}
-            label="청소 후"
-            labelBg="rgba(2, 132, 199, 0.85)"
+            alt={`청소 후 ${pair.alt}`}
+            className={styles.img}
+            width={1086}
+            height={724}
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+          />
+          <div className={styles.beforeLayer} aria-hidden={pos === 0}>
+            <img
+              src={pair.before}
+              alt={`청소 전 ${pair.alt}`}
+              className={styles.img}
+              width={1081}
+              height={721}
+              loading="lazy"
+              decoding="async"
+              draggable={false}
+            />
+          </div>
+
+          <span className={`${styles.tag} ${styles.tagBefore}`}>Before</span>
+          <span className={`${styles.tag} ${styles.tagAfter}`}>After</span>
+
+          <div className={styles.handle} aria-hidden="true">
+            <span className={styles.knob}>
+              <Icon name="drag" size={20} />
+            </span>
+          </div>
+
+          {/* 키보드·스크린리더용 컨트롤. 마우스/터치는 위 포인터 이벤트로 처리 */}
+          <input
+            type="range"
+            min={0}
+            max={100}
+            step={1}
+            value={Math.round(pos)}
+            onChange={(e) => setPos(Number(e.target.value))}
+            className={styles.range}
+            aria-label={`${pair.label} 전후 비교 슬라이더. 값이 클수록 청소 전 사진이 넓게 보입니다`}
+            aria-valuetext={`청소 전 ${Math.round(pos)}%, 청소 후 ${100 - Math.round(pos)}%`}
           />
         </div>
+
+        <p className={styles.disclaimer}>
+          <Icon name="alert" size={16} />
+          예시 이미지입니다. 실제 시공 사례가 아니며, 서비스 결과를 이해하기 위한 참고용입니다.
+        </p>
       </div>
     </section>
   );

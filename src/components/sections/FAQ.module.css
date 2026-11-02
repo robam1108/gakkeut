@@ -1,0 +1,92 @@
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.more {
+  margin-top: 1.25rem;
+  color: var(--c-muted-strong);
+}
+
+.moreLink {
+  color: var(--c-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.list {
+  border-top: 1px solid var(--c-border-strong);
+}
+
+.item {
+  border-bottom: 1px solid var(--c-border-strong);
+}
+
+.qWrap {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  min-height: 72px;
+  padding: 1.25rem 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--c-primary);
+}
+
+.icon {
+  flex-shrink: 0;
+  color: var(--c-secondary);
+  transition: transform 0.25s;
+}
+
+.iconOpen {
+  transform: rotate(45deg);
+}
+
+/* grid-template-rows 0fr → 1fr 로 높이 애니메이션 */
+.a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.aOpen {
+  grid-template-rows: 1fr;
+}
+
+.aInner {
+  overflow: hidden;
+}
+
+.aInner p {
+  padding: 0 3rem 1.5rem 0;
+  color: var(--c-muted-strong);
+}
+
+@media (max-width: 959px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .q {
+    font-size: 1rem;
+  }
+
+  .aInner p {
+    padding-right: 0;
+    font-size: var(--fs-sm);
+  }
+}

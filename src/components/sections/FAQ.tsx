@@ -1,71 +1,67 @@
 import { useState } from "react";
 import { FAQS } from "../../content/faq";
+import { phoneHref } from "../../config/site";
+import SectionHeader from "../ui/SectionHeader";
+import Icon from "../ui/Icon";
+import styles from "./FAQ.module.css";
 
 export default function FAQ() {
-  const [open, setOpen] = useState<number | null>(null);
+  const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="section" style={{ backgroundColor: "white" }}>
-      <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "0 1.25rem" }}>
-        <div style={{ textAlign: "center", marginBottom: "clamp(2.5rem, 8vw, 4rem)" }}>
-          <p className="badge">FAQ</p>
-          <h2 className="section-title">자주 묻는 질문</h2>
+    <section id="faq" className="section" aria-labelledby="faq-title">
+      <div className={`container ${styles.grid}`}>
+        <div>
+          <SectionHeader id="faq-title" eyebrow="FAQ" title="자주 묻는 질문" />
+          <p className={styles.more}>
+            찾는 답이 없다면{" "}
+            {phoneHref ? (
+              <>
+                <a href={phoneHref} className={styles.moreLink}>
+                  전화
+                </a>
+                로 문의해 주세요.
+              </>
+            ) : (
+              <>
+                <a href="#estimate" className={styles.moreLink}>
+                  견적 신청서
+                </a>
+                에 남겨 주세요.
+              </>
+            )}
+          </p>
         </div>
 
-        <div style={{ borderTop: "1px solid #e2e8f0", borderBottom: "1px solid #e2e8f0" }}>
+        <div className={styles.list}>
           {FAQS.map((f, i) => {
-            const panelId = `faq-panel-${i}`;
             const isOpen = open === i;
             return (
-              <div key={f.q} style={{ borderBottom: i < FAQS.length - 1 ? "1px solid #e2e8f0" : "none" }}>
-                <button
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  className="tap"
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: "1rem",
-                    padding: "1.25rem 0",
-                    textAlign: "left",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
+              <div key={f.q} className={styles.item}>
+                <h3 className={styles.qWrap}>
+                  <button
+                    type="button"
+                    id={`faq-q-${i}`}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-a-${i}`}
+                    className={styles.q}
+                    onClick={() => setOpen(isOpen ? null : i)}
+                  >
+                    <span>{f.q}</span>
+                    <Icon name="plus" size={20} className={`${styles.icon} ${isOpen ? styles.iconOpen : ""}`} />
+                  </button>
+                </h3>
+                <div
+                  id={`faq-a-${i}`}
+                  role="region"
+                  aria-labelledby={`faq-q-${i}`}
+                  className={`${styles.a} ${isOpen ? styles.aOpen : ""}`}
+                  inert={!isOpen}
                 >
-                  <span style={{ fontWeight: 600, color: "#0f172a", fontSize: "1rem" }}>{f.q}</span>
-                  <svg
-                    fill="none"
-                    stroke="#94a3b8"
-                    viewBox="0 0 24 24"
-                    style={{
-                      width: "1.25rem",
-                      height: "1.25rem",
-                      flexShrink: 0,
-                      transition: "transform 0.2s",
-                      transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
-                    }}
-                    aria-hidden="true"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                  </svg>
-                </button>
-                {isOpen && (
-                  <div
-                    id={panelId}
-                    style={{
-                      paddingBottom: "1.25rem",
-                      color: "#475569",
-                      fontSize: "0.875rem",
-                      lineHeight: 1.7,
-                    }}
-                  >
-                    {f.a}
+                  <div className={styles.aInner}>
+                    <p>{f.a}</p>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}

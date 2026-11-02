@@ -1,0 +1,60 @@
+:root {
+  /* Brand */
+  --c-primary: #203c35;
+  --c-primary-hover: #182e28;
+  --c-secondary: #42685a;
+  --c-accent: #c8d9a4;
+  --c-accent-hover: #b9cd90;
+
+  /* Neutrals */
+  --c-bg: #f5f5ef;
+  --c-surface: #ffffff;
+  --c-text: #252a28;
+  --c-muted: #747b75;
+  --c-muted-strong: #5a615b; /* 작은 글씨용 — 아이보리 위 대비 확보 */
+  --c-border: #e3e6df;
+  --c-border-strong: #cfd4ca;
+
+  /* Status */
+  --c-error: #b3261e;
+  --c-error-bg: #fbeeec;
+  --c-success: #2e6b4f;
+  --c-warning-bg: #f6f0dc;
+  --c-warning: #6b5410;
+
+  /* On dark */
+  --c-on-primary: #f5f5ef;
+  --c-on-primary-muted: #b7c4bc;
+
+  /* Shape */
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 10px;
+
+  /* Elevation — 과하지 않게 두 단계만 */
+  --shadow-1: 0 1px 2px rgba(32, 60, 53, 0.06), 0 2px 8px rgba(32, 60, 53, 0.05);
+  --shadow-2: 0 4px 12px rgba(32, 60, 53, 0.08), 0 12px 32px rgba(32, 60, 53, 0.08);
+
+  /* Type */
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Malgun Gothic", sans-serif;
+  --fs-display: clamp(2.125rem, 1.4rem + 2.8vw, 3.375rem);
+  --fs-h2: clamp(1.75rem, 1.3rem + 1.8vw, 2.625rem);
+  --fs-h3: clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem);
+  --fs-lead: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --fs-body: 1rem;
+  --fs-sm: 0.9375rem;
+  --fs-xs: 0.8125rem;
+
+  /* Layout */
+  --container: 1200px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --section-y: clamp(4.5rem, 10vw, 8rem);
+  --header-h: 72px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --header-h: 60px;
+  }
+}

@@ -1,0 +1,135 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  background-color: transparent;
+  transition:
+    background-color 0.25s,
+    box-shadow 0.25s;
+}
+
+.scrolled {
+  /* backdrop-filter는 쓰지 않는다 — fixed 자식(모바일 메뉴 패널)의 기준 박스가 헤더로 바뀌어 패널이 접힘 */
+  background-color: var(--c-surface);
+  box-shadow: 0 1px 0 var(--c-border), 0 6px 20px rgba(32, 60, 53, 0.06);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+}
+
+.brand {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.links {
+  display: flex;
+  gap: 2rem;
+}
+
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--c-text);
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: var(--c-primary);
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s;
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+}
+
+.cta {
+  min-height: 44px;
+  padding: 0 1.25rem;
+  font-size: var(--fs-sm);
+}
+
+.toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--c-primary);
+}
+
+.panel {
+  display: none;
+}
+
+@media (max-width: 959px) {
+  .nav {
+    display: none;
+  }
+
+  .toggle {
+    display: inline-flex;
+  }
+
+  .panel {
+    display: block;
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.5rem 0 calc(2rem + env(safe-area-inset-bottom));
+    background-color: var(--c-surface);
+    overflow-y: auto;
+  }
+
+  .panel[hidden] {
+    display: none;
+  }
+
+  .panelLinks {
+    margin-bottom: 1.5rem;
+  }
+
+  .panelLink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 60px;
+    border-bottom: 1px solid var(--c-border);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--c-primary);
+  }
+}

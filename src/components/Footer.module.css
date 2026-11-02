@@ -1,0 +1,137 @@
+.footer {
+  padding: clamp(3.5rem, 7vw, 5rem) 0 2rem;
+  background-color: #1a312b;
+  color: var(--c-on-primary);
+}
+
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 2fr) minmax(0, 4fr);
+  gap: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(245, 245, 239, 0.12);
+}
+
+.tagline {
+  margin-top: 1.25rem;
+  color: var(--c-on-primary-muted);
+}
+
+.contactBtns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.colTitle {
+  margin-bottom: 1rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--c-accent);
+}
+
+.link {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  font-size: var(--fs-sm);
+  color: var(--c-on-primary-muted);
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: var(--c-on-primary);
+}
+
+.dl {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  font-size: var(--fs-sm);
+}
+
+.dl div {
+  display: flex;
+  gap: 1rem;
+}
+
+.dl dt {
+  flex: 0 0 5.5rem;
+  color: var(--c-on-primary-muted);
+}
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-top: 2rem;
+  font-size: var(--fs-xs);
+  color: var(--c-on-primary-muted);
+}
+
+.biz {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem 1.5rem;
+}
+
+.biz div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.25rem;
+}
+
+.legal a {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+}
+
+.legal a:hover {
+  color: var(--c-on-primary);
+}
+
+.legalStrong {
+  font-weight: 600;
+  color: var(--c-on-primary);
+}
+
+@media (max-width: 959px) {
+  .top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 599px) {
+  .top {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .contactBtns > * {
+    flex: 1 1 100%;
+  }
+
+  .footer {
+    /* 모바일 하단 고정 CTA 바에 가려지지 않도록 */
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom));
+  }
+}
